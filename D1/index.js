@@ -163,7 +163,8 @@ console.log(greatest([1,2,3,4,5,6,7,8,9]))
 // 14)
 // Create a function to get the largest even number from an array of integers.
 
-
+const largestEven = (n => {
+})
 
 // 15)
 // Create a function to check from two given integers, whether one is positive and another one is negative.
