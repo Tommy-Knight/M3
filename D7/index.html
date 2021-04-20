@@ -36,6 +36,9 @@
       EXTRA)
       Visualize on a Google Map plugin all the users (using lat & lng)
     -->
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -52,9 +55,10 @@
         <option value="e-mail">e-mail</option>
       </select>
     </div>
-    <div class="container"></div>
+    <div class="container selected"></div>
     <div class="container"></div>
   </div>
+
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -73,6 +77,7 @@
         userlist.push(user)
         box.innerHTML += `<li>${user.username}</li>`
       })
+
     }
     getUsers()
   </script>
