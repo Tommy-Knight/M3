@@ -30,7 +30,7 @@
   <title>Shopping Cart</title>
 </head>
 
-<body>
+<body style="margin-bottom: 200px;">
 
 
 
@@ -45,8 +45,8 @@
     </div>
   </div>
 
-  <div class="text-white" style="position:fixed; bottom: 0px; height: 200px; width: 100%; background-color: black;">
-    Shopping Cart</div>
+  <div class="text-white" style="position:fixed; bottom: 0px; height: 200px; width: 100%; background-color: navy;">
+    Shopping Cart </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -79,9 +79,11 @@
       const cardDiv = document.querySelector("body div.album div.container div.row")
       cardDiv.innerHTML = ""
       console.log(searchInput)
+      console.log(shoppingCart)
       fetch("https://striveschool-api.herokuapp.com/books")
         .then((response) => response.json())
         .then((result) => {
+          const shoppingCart = document.querySelector("body > div.text-white")
           result.forEach(result => {
             cardDiv.innerHTML += `<div class="col-md-4" id="cardId${result.asin}">
                 <div class="card mb-4 shadow-sm">
