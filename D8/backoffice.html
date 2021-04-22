@@ -82,7 +82,7 @@
     <!-- END OF NAVBAR -->
     <div class="container">
         <h4 id="pagetitle" class="ml-2">Add Product</h4>
-        <form onsubmit="putObj(event), pullProducts()" class="mx-2">
+        <form onsubmit="putObj(event)" class="mx-2">
             <label for="name">Name</label><br>
             <input id="name" type="text"><br>
             <label for="description">Description</label><br>
@@ -162,10 +162,7 @@
             })
             const products = await response.json()
             console.log("SUCCESS")
-        }
-        //EDIT PUT REQUEST 
-
-
+        } 
         // DELETE BUTTON
         const deleteObj = async () => {
             const response = await fetch(endpoint + id, {
