@@ -76,8 +76,8 @@
           allBooks.push(result)
         })
     }
+
     console.log(allBooks)
-    
     const addToBasket = async (id) => {
       let basket = document.getElementById("basket")
       const response = await fetch("https://striveschool-api.herokuapp.com/books/" + id)
@@ -85,7 +85,7 @@
       console.log("Basket received " + books.title)
       basket.innerHTML += `<a class="dropdown-item" href="#">${books.title}</a>`
     }
-    
+
     const loadBooks = () => {
       const searchInput = document.querySelector("#searchBook").value
       const cardDiv = document.querySelector("body div.album div.container div.row")
