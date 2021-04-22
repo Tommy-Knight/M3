@@ -59,16 +59,38 @@
 </head>
 
 <body>
-<button>Pull</button>
-<div class="container">
-    <div class="row text-center" style="border: 1px solid; line-height: 75px;white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">
-        <div id="brand" class="col-2">Brand<hr></div>
-        <div id="name" class="col-2">Name<hr></div>
-        <div id="price" class="col-2">Price<hr></div>
-        <div id="description"class="col-2">Description<hr></div>
-        <div id="picture" class="col-2">Picture<hr></div>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">Navbar</span>
+        <a class="nav-link text-white" href="index.html">Products <span class="sr-only">(current)</span></a>
+        <a class="nav-link text-white" href="details.html">Details</a>
+        <a class="nav-link text-danger" href="backoffice.html">Backoffice</a>
+    </nav>
+    <!-- END OF NAVBAR -->
+    <div class="container mt-5">
+        <div class="row text-center"
+            style="border: 1px solid; line-height: 75px;white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">
+            <div id="brand" class="col-2">Brand
+                <hr>
+            </div>
+            <div id="name" class="col-2">Name
+                <hr>
+            </div>
+            <div id="price" class="col-2">Price
+                <hr>
+            </div>
+            <div id="description" class="col-2">Description
+                <hr>
+            </div>
+            <div id="picture" class="col-2">Picture
+                <hr>
+            </div>
+            <div id="edit" class="col-1">Edit
+                <hr>
+            </div>
+
+        </div>
     </div>
-</div>
 
     <script>
 
@@ -80,16 +102,18 @@
                 }
             })
             const products = await response.json()
-            products.forEach(product => {   
-                 allProducts.push(product)
+            products.forEach(product => {
+                allProducts.push(product)
             })
             console.log(allProducts.brand)
-            allProducts.forEach(product =>{
+            allProducts.forEach(product => {
                 document.getElementById("brand").innerHTML += `${product.brand}<br>`
                 document.getElementById("name").innerHTML += `${product.name}<br>`
                 document.getElementById("description").innerHTML += `${product.description}<br>`
                 document.getElementById("price").innerHTML += `${product.price}<br>`
                 document.getElementById("picture").innerHTML += `<img src="${product.imageUrl}" height="75px" alt="${product.name}"><br>`
+                document.getElementById("edit").innerHTML += `<a href="backoffice.html?id=${product._id}">x</a><br>`
+
             })
         }
         pullProducts()

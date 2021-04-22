@@ -50,7 +50,20 @@
             headers: {
             "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMDlkOWIxZjBmYjAwMTVkOTE2ZmYiLCJpYXQiOjE2MTkwMDM4NjUsImV4cCI6MTYyMDIxMzQ2NX0.Z54AbSjf0Z4bfk_0SKChq7QIDKgOWSbPEa51sapG25c"
             }
-            
+            Today you have to implement:
+
+            - In the backoffice page
+                a) Add a button and the functionality to EDIT a single product ( PUT  endpoint/{id})
+                b) Add a button and the functionality to DELETE a single product ( DELETE endpoint/{id})
+                c) Add validation to the product creation/edit form
+                d) Display an error message if something goes wrong
+
+            - In the front page
+                a) Add a loader while waiting for the product to load
+                b) Add a link on each item to go to a detail page
+
+            - Create a new detail page where you are going to display the item information
+
             -->
     <style>
 
@@ -59,22 +72,57 @@
 </head>
 
 <body>
-
-    <form onsubmit="putObj(event), pullProducts()" class="mx-2">
-        <label for="name">Name</label><br>
-        <input id="name" type="text"><br>
-        <label for="description">Description</label><br>
-        <input id="description" type="text"><br>
-        <label for="brand">Brand</label><br>
-        <input id="brand" type="text"><br>
-        <label for="imageUrl">Image Url</label><br>
-        <input id="imageUrl" type="text"><br>
-        <label for="price">Price</label><br>
-        <input id="price" type="text"><br>
-        <input type="submit" class="btn btn-outline-dark w-20 mt-1">
-    </form>
-
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">Navbar</span>
+        <a class="nav-link text-white" href="index.html">Products <span class="sr-only">(current)</span></a>
+        <a class="nav-link text-white" href="details.html">Details</a>
+        <a class="nav-link text-danger" href="backoffice.html">Backoffice</a>
+    </nav>
+    <!-- END OF NAVBAR -->
+    <div class="container">
+        <h4 id="pagetitle" class="ml-2">Add Product</h4>
+        <form onsubmit="putObj(event), pullProducts()" class="mx-2">
+            <label for="name">Name</label><br>
+            <input id="name" type="text"><br>
+            <label for="description">Description</label><br>
+            <input id="description" type="text"><br>
+            <label for="brand">Brand</label><br>
+            <input id="brand" type="text"><br>
+            <label for="imageUrl">Image Url</label><br>
+            <input id="imageUrl" type="text"><br>
+            <label for="price">Price</label><br>
+            <input id="price" type="text"><br>
+            <label for="id">ID</label><br>
+            <input id="id" type="text" ><br>
+            <input type="submit" class="btn btn-outline-dark w-20 mt-1">
+            <a><button type="button" onclick="deleteObj()" class="btn btn-outline-danger mt-1">Delete</button></a>
+        </form>
+    </div>
     <script>
+        const params = new URLSearchParams(location.search)
+        const id = params.get('id')
+        const endpoint = "https://striveschool-api.herokuapp.com/api/product/"
+        // ONLOAD FILL FORM
+        window.onload = async () => {
+            if (id) {
+                document.getElementById("pagetitle").innerHTML = `Edit product id: ${id}`
+
+                const response = await fetch(endpoint + id, {
+                    headers: {
+                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMDlkOWIxZjBmYjAwMTVkOTE2ZmYiLCJpYXQiOjE2MTkwMDM4NjUsImV4cCI6MTYyMDIxMzQ2NX0.Z54AbSjf0Z4bfk_0SKChq7QIDKgOWSbPEa51sapG25c"
+                    }
+                })
+                const product = await response.json()
+                document.querySelector("#name").value = product.name
+                document.querySelector("#description").value = product.description
+                document.querySelector("#brand").value = product.brand
+                document.querySelector("#imageUrl").value = product.imageUrl
+                document.querySelector("#price").value = product.price
+                document.querySelector("#id").value = product._id
+            }
+        }
+        // SUMBIT BUTTON POST
         const putObj = async (event) => {
             event.preventDefault();
             const testobj = {
@@ -84,25 +132,51 @@
                 imageUrl: document.querySelector("#imageUrl").value,
                 price: document.querySelector("#price").value
             }
-            const response = await fetch('https://striveschool-api.herokuapp.com/api/product/', {
-                method: 'POST',
-                body: JSON.stringify(testobj),
-                headers: new Headers({
-                    'Content-Type': 'application/json',
-                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMDlkOWIxZjBmYjAwMTVkOTE2ZmYiLCJpYXQiOjE2MTkwMDM4NjUsImV4cCI6MTYyMDIxMzQ2NX0.Z54AbSjf0Z4bfk_0SKChq7QIDKgOWSbPEa51sapG25c"
+            if (id) {
+                const response = await fetch(endpoint + id, {
+                    method: 'PUT',
+                    body: JSON.stringify(testobj),
+                    headers: new Headers({
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMDlkOWIxZjBmYjAwMTVkOTE2ZmYiLCJpYXQiOjE2MTkwMDM4NjUsImV4cCI6MTYyMDIxMzQ2NX0.Z54AbSjf0Z4bfk_0SKChq7QIDKgOWSbPEa51sapG25c"
+                    })
                 })
-            })
+            }
+            else {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    body: JSON.stringify(testobj),
+                    headers: new Headers({
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMDlkOWIxZjBmYjAwMTVkOTE2ZmYiLCJpYXQiOjE2MTkwMDM4NjUsImV4cCI6MTYyMDIxMzQ2NX0.Z54AbSjf0Z4bfk_0SKChq7QIDKgOWSbPEa51sapG25c"
+                    })
+                })
+            }
         }
-        // putObj()
+        // CONSOLE.LOG PRODUCTS
         const pullProducts = async () => {
-            const response = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
+            const response = await fetch(endpoint, {
                 headers: {
                     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMDlkOWIxZjBmYjAwMTVkOTE2ZmYiLCJpYXQiOjE2MTkwMDM4NjUsImV4cCI6MTYyMDIxMzQ2NX0.Z54AbSjf0Z4bfk_0SKChq7QIDKgOWSbPEa51sapG25c"
                 }
             })
             const products = await response.json()
-            console.log(products)
+            console.log("SUCCESS")
         }
+        //EDIT PUT REQUEST 
+
+
+        // DELETE BUTTON
+        const deleteObj = async () => {
+            const response = await fetch(endpoint + id, {
+                method: 'DELETE',
+                headers: new Headers({
+                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMDlkOWIxZjBmYjAwMTVkOTE2ZmYiLCJpYXQiOjE2MTkwMDM4NjUsImV4cCI6MTYyMDIxMzQ2NX0.Z54AbSjf0Z4bfk_0SKChq7QIDKgOWSbPEa51sapG25c"
+                })
+            })
+        }
+
+
     </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
