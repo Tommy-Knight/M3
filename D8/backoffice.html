@@ -135,11 +135,11 @@
             if (id) {
                 const response = await fetch(endpoint + id, {
                     method: 'PUT',
-                    body: JSON.stringify(testobj),
                     headers: new Headers({
                         'Content-Type': 'application/json',
                         "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMDlkOWIxZjBmYjAwMTVkOTE2ZmYiLCJpYXQiOjE2MTkwMDM4NjUsImV4cCI6MTYyMDIxMzQ2NX0.Z54AbSjf0Z4bfk_0SKChq7QIDKgOWSbPEa51sapG25c"
-                    })
+                    }),
+                    body: JSON.stringify(testobj)
                 })
             }
             else {
